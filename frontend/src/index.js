@@ -3,11 +3,12 @@ import bubble1 from "./assets/images/bubble1.png";
 import bubble2 from "./assets/images/bubble2.png";
 import bubble3 from "./assets/images/bubble3.png";
 import bubble4 from "./assets/images/bubble4.png";
+import { v4 as uuidv4 } from "uuid";
+import CanvasController from "./controller/canvasController";
+
 // 캔버스 설정
-const canvas = document.getElementById("canvas");
+CanvasController();
 const ctx = canvas.getContext("2d");
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
 
 const images = [bubble1, bubble2, bubble3, bubble4];
 // 여러 물방울 생성
@@ -16,12 +17,12 @@ for (let i = 0; i < 30; i++) {
   const x = canvas.width / 2;
   const y = canvas.height / 2;
   const speed = 1; // 물방울 속도
-  // const angle = Math.random() * 2 * Math.PI; // 랜덤한 각도
   const dx = Math.random() * speed * 2 - speed;
   const dy = Math.random() * speed * 2 - speed;
   const imageIndex = Math.floor(Math.random() * 4);
   bubbles.push(
     new Bubble(
+      uuidv4(),
       x,
       y,
       speed,
@@ -36,9 +37,9 @@ for (let i = 0; i < 30; i++) {
 // 애니메이션 함수
 function animate() {
   ctx.clearRect(0, 0, canvas.width, canvas.height); // 캔버스 초기화
-  bubbles.forEach((ball) => {
-    ball.draw(ctx);
-    ball.update(canvas);
+  bubbles.forEach((bubble) => {
+    bubble.draw(ctx);
+    bubble.update(canvas);
   });
 
   requestAnimationFrame(animate); // 애니메이션 프레임 요청
@@ -46,12 +47,6 @@ function animate() {
 
 // 애니메이션 시작
 animate();
-
-// 창 크기 조정 시 캔버스 크기 업데이트
-window.addEventListener("resize", () => {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-});
 
 // 클릭 이벤트 처리 함수
 

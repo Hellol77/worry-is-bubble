@@ -1,5 +1,6 @@
 export default class Bubble {
-  constructor(x, y, speed, dx, dy, imageSrc, text) {
+  constructor(id, x, y, speed, dx, dy, imageSrc, text) {
+    this.id = id;
     this.x = x;
     this.y = y;
     this.dx = dx;
