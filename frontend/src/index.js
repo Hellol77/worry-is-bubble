@@ -71,3 +71,23 @@ canvas.addEventListener("mousedown", (event) => {
     }
   }
 });
+
+canvas.addEventListener("mousemove", (event) => {
+  const rect = canvas.getBoundingClientRect();
+  const mouseX = event.clientX - rect.left;
+  const mouseY = event.clientY - rect.top;
+
+  let hovered = false;
+  for (let i = 0; i < bubbles.length; i++) {
+    if (bubbles[i].isClicked(mouseX, mouseY)) {
+      hovered = true;
+      break;
+    }
+  }
+
+  if (hovered) {
+    canvas.style.cursor = "pointer";
+  } else {
+    canvas.style.cursor = "default";
+  }
+});
