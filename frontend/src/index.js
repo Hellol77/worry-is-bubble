@@ -19,10 +19,10 @@ const text = [
   "취업하고 싶어요!",
 ];
 const bubbles = [];
-for (let i = 0; i < 40; i++) {
+for (let i = 0; i < 80; i++) {
   const x = canvas.width / 2;
   const y = canvas.height / 2;
-  const speed = 1; // 물방울 속도
+  const speed = 2; // 물방울 속도
   const dx = Math.random() * speed * 2 - speed;
   const dy = Math.random() * speed * 2 - speed;
   const imageIndex = Math.floor(Math.random() * 4);
