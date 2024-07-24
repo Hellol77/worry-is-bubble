@@ -12,8 +12,14 @@ const ctx = canvas.getContext("2d");
 
 const images = [bubble1, bubble2, bubble3, bubble4];
 // 여러 물방울 생성
+const text = [
+  "제 고민은...",
+  "무엇일까요?",
+  "물방울을 클릭해보세요!",
+  "취업하고 싶어요!",
+];
 const bubbles = [];
-for (let i = 0; i < 30; i++) {
+for (let i = 0; i < 40; i++) {
   const x = canvas.width / 2;
   const y = canvas.height / 2;
   const speed = 1; // 물방울 속도
@@ -29,7 +35,7 @@ for (let i = 0; i < 30; i++) {
       dx,
       dy,
       images[imageIndex],
-      "안녕하세요qwdqwdqwdwwqwd"
+      text[Math.floor(Math.random() * 4)]
     )
   );
 }
