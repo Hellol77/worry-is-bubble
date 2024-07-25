@@ -4,7 +4,7 @@ import { Server } from "socket.io";
 import mysql2 from "mysql2/promise";
 import dotenv from "dotenv";
 import cors from "cors";
-
+import { v4 as uuidv4 } from "uuid";
 dotenv.config();
 
 const port = process.env.PORT || 3000;
@@ -37,43 +37,37 @@ const io = new Server(server, {
 
 app.use(cors());
 
-app.post("/add-message", (req, res) => {
-  const message = req.body.message;
-
-  connection.query(
-    "INSERT INTO messages (text) VALUES (?)",
-    [message],
-    (error, results) => {
-      if (error) {
-        return res.status(500).send("Error inserting message");
-      }
-      // 새로운 메시지가 추가되었음을 클라이언트에게 알림
-      io.emit("new message", {
-        id: results.insertId,
-        message,
-        created_at: createdAt,
-      });
-      res.status(200).send("Message added");
-    }
-  );
-});
 io.on("connection", async (socket) => {
   console.log("User connected");
   const [rows] = await connection.execute("SELECT * FROM messages");
 
   socket.emit("getBubbles", rows);
+
+  socket.on("addBubble", async (data) => {
+    console.log("Received input server: ", data);
+    const id = uuidv4();
+    await connection.query("INSERT INTO messages (id,text) VALUES (?,?)", [
+      id,
+      data,
+    ]);
+    io.emit("add", {
+      id: id,
+      date: new Date(),
+      text: data,
+    });
+  });
 });
 
-app.get("/", async (req, res) => {
-  try {
-    const [rows] = await connection.execute("SELECT * FROM messages");
-    console.log(rows);
-    res.json(rows);
-  } catch (err) {
-    console.error("쿼리 실행 실패:", err.stack);
-    res.status(500).send("서버 오류");
-  }
-});
+// app.get("/", async (req, res) => {
+//   try {
+//     const [rows] = await connection.execute("SELECT * FROM messages");
+//     console.log(rows);
+//     res.json(rows);
+//   } catch (err) {
+//     console.error("쿼리 실행 실패:", err.stack);
+//     res.status(500).send("서버 오류");
+//   }
+// });
 
 server.listen(port, async () => {
   await connectDB();

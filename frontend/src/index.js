@@ -1,5 +1,9 @@
 import CanvasController from "./controller/canvasController";
-import socket from "./apis/socket";
+import InputController from "./controller/inputController";
+
 const canvasController = new CanvasController();
-socket();
+const inputController = new InputController();
+// socket();
+
 canvasController.init();
+inputController.init();

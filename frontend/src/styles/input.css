@@ -12,7 +12,7 @@
   transition: all 0.3s;
 }
 
-.message_input {
+#message_input {
   height: 45px;
   padding: 0 10px;
   width: 100%;
