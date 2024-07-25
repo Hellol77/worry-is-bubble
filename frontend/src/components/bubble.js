@@ -7,6 +7,7 @@ export default class Bubble {
     this.dy = dy;
     this.speed = speed;
     this.text = text;
+    this.hovered = false;
     const tempCanvas = document.createElement("canvas");
     const tempCtx = tempCanvas.getContext("2d");
     // tempCtx.font = "bold 20px Arial"; // 기본 폰트 설정
@@ -40,7 +41,7 @@ export default class Bubble {
       ctx.drawImage(tempCanvas, this.x - this.radius, this.y - this.radius);
 
       // 텍스트 그리기
-      ctx.font = `0.9rem Arial`;
+      ctx.font = `${this.hovered ? "1rem" : "0.9rem"} Arial`;
       ctx.fillStyle = "#000";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
@@ -58,7 +59,6 @@ export default class Bubble {
       this.dx = Math.random() * this.speed * 2 - this.speed; // 새로운 랜덤 x 방향 속도
       this.dy *= -1; // y 방향 속도 반전
     }
-
     // 물방울 위치 업데이트
     this.x += this.dx;
     this.y += this.dy;
@@ -66,6 +66,7 @@ export default class Bubble {
 
   isClicked(mouseX, mouseY) {
     const dist = Math.sqrt((this.x - mouseX) ** 2 + (this.y - mouseY) ** 2);
+    this.hovered = dist < this.radius;
     return dist < this.radius;
   }
 }
