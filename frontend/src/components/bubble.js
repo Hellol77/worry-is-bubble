@@ -41,7 +41,7 @@ export default class Bubble {
       ctx.drawImage(tempCanvas, this.x - this.radius, this.y - this.radius);
 
       // 텍스트 그리기
-      ctx.font = `${this.hovered ? "1rem" : "0.9rem"} Arial`;
+      ctx.font = `${this.hovered ? "2rem" : "1.5rem"} Dongle`;
       ctx.fillStyle = "#000";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";

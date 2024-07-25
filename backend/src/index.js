@@ -36,10 +36,32 @@ const io = new Server(server, {
 });
 
 app.use(cors());
-io.on("connection", (socket) => {
-  console.log("User connected");
 
-  socket.emit("getBubbles");
+app.post("/add-message", (req, res) => {
+  const message = req.body.message;
+
+  connection.query(
+    "INSERT INTO messages (text) VALUES (?)",
+    [message],
+    (error, results) => {
+      if (error) {
+        return res.status(500).send("Error inserting message");
+      }
+      // 새로운 메시지가 추가되었음을 클라이언트에게 알림
+      io.emit("new message", {
+        id: results.insertId,
+        message,
+        created_at: createdAt,
+      });
+      res.status(200).send("Message added");
+    }
+  );
+});
+io.on("connection", async (socket) => {
+  console.log("User connected");
+  const [rows] = await connection.execute("SELECT * FROM messages");
+
+  socket.emit("getBubbles", rows);
 });
 
 app.get("/", async (req, res) => {

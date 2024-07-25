@@ -4,6 +4,7 @@ import bubble2 from "../assets/images/bubble2.png";
 import bubble3 from "../assets/images/bubble3.png";
 import bubble4 from "../assets/images/bubble4.png";
 import { v4 as uuidv4 } from "uuid";
+import socket from "../apis/socket";
 
 export default class CanvasController {
   constructor() {
@@ -28,10 +29,15 @@ export default class CanvasController {
     this.bubbles = [];
   }
   init() {
+    // this.getBubbles();
     this.start();
     this.handleClick();
     this.handleHover();
     this.generateBubbles();
+  }
+
+  getBubbles() {
+    this.bubbles = socket();
   }
 
   generateBubbles() {
@@ -42,6 +48,7 @@ export default class CanvasController {
       const dx = Math.random() * speed * 2 - speed;
       const dy = Math.random() * speed * 2 - speed;
       const imageIndex = Math.floor(Math.random() * 5);
+
       this.bubbles.push(
         new Bubble(
           uuidv4(),
@@ -71,7 +78,7 @@ export default class CanvasController {
     this.animate();
   }
 
-  handleClick(event) {
+  handleClick() {
     this.canvas.addEventListener("mousedown", (event) => {
       const rect = this.canvas.getBoundingClientRect();
       const mouseX = event.clientX - rect.left;
@@ -90,7 +97,7 @@ export default class CanvasController {
     });
   }
 
-  handleHover(event) {
+  handleHover() {
     this.canvas.addEventListener("mousemove", (event) => {
       const rect = this.canvas.getBoundingClientRect();
       const mouseX = event.clientX - rect.left;

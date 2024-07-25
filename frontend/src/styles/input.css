@@ -1,0 +1,34 @@
+.input_container {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  align-items: center;
+  width: 350px;
+  height: 50px;
+  font-size: 1rem;
+  outline: none;
+
+  color: #333;
+  transition: all 0.3s;
+}
+
+.message_input {
+  height: 45px;
+  padding: 0 10px;
+  width: 100%;
+  margin-right: 10px;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  flex-shrink: 1;
+}
+
+.message_submit_button {
+  flex-shrink: 0;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+  background-color: #2a7ffa;
+  height: 100%;
+  width: 50px;
+  color: #eaffff;
+}
