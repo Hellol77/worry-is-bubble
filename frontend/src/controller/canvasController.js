@@ -7,6 +7,7 @@ import io from "socket.io-client";
 
 export default class CanvasController {
   constructor() {
+    this.socket = io("http://localhost:3000");
     this.canvas = document.getElementById("canvas");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
@@ -24,12 +25,11 @@ export default class CanvasController {
   }
 
   socketInit() {
-    const socketio = io("http://localhost:3000");
-    socketio.on("connect", () => {
+    this.socket.on("connect", () => {
       console.log("Connected to server");
     });
 
-    socketio.on("getBubbles", (bubbles) => {
+    this.socket.on("getBubbles", (bubbles) => {
       this.bubbles = bubbles.map((bubble) => {
         const x = this.canvas.width / 2;
         const y = this.canvas.height / 2;
@@ -51,8 +51,17 @@ export default class CanvasController {
       });
     });
 
-    socketio.on("add", (data) => {
+    this.socket.on("add", (data) => {
       this.addBubble(data);
+    });
+
+    this.socket.on("delete", (id) => {
+      for (let i = 0; i < this.bubbles.length; i++) {
+        if (this.bubbles[i].id === id) {
+          this.bubbles.splice(i, 1);
+          break;
+        }
+      }
     });
   }
 
@@ -107,7 +116,7 @@ export default class CanvasController {
 
       for (let i = this.bubbles.length - 1; i >= 0; i--) {
         if (this.bubbles[i].isClicked(mouseX, mouseY)) {
-          console.log(`Ball clicked! Color: ${this.bubbles[i].color}`);
+          this.socket.emit("deleteBubble", this.bubbles[i].id);
           this.bubbles.splice(i, 1);
           break;
         }

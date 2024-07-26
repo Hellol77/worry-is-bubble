@@ -12,13 +12,16 @@ const port = process.env.PORT || 3000;
 const app = express();
 const server = createServer(app);
 
+app.use(cors());
 const dbConfig = {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
 };
+
 let connection;
+
 async function connectDB() {
   try {
     connection = await mysql2.createConnection(dbConfig);
@@ -35,10 +38,9 @@ const io = new Server(server, {
   },
 });
 
-app.use(cors());
-
 io.on("connection", async (socket) => {
   console.log("User connected");
+
   const [rows] = await connection.execute("SELECT * FROM messages");
 
   socket.emit("getBubbles", rows);
@@ -52,22 +54,16 @@ io.on("connection", async (socket) => {
     ]);
     io.emit("add", {
       id: id,
-      date: new Date(),
       text: data,
     });
   });
-});
 
-// app.get("/", async (req, res) => {
-//   try {
-//     const [rows] = await connection.execute("SELECT * FROM messages");
-//     console.log(rows);
-//     res.json(rows);
-//   } catch (err) {
-//     console.error("쿼리 실행 실패:", err.stack);
-//     res.status(500).send("서버 오류");
-//   }
-// });
+  socket.on("deleteBubble", async (id) => {
+    console.log("Received delete request for id: ", id);
+    await connection.query("DELETE FROM messages WHERE id = ?", [id]);
+    io.emit("delete", id);
+  });
+});
 
 server.listen(port, async () => {
   await connectDB();
