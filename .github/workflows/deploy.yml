@@ -30,14 +30,14 @@ jobs:
         docker push ${{ secrets.DOCKER_USERNAME }}/worry-is-bubble:latest
 
     - name: Deploy to EC2
-      env:
-        HOST: ${{ secrets.EC2_HOST }}
-        USERNAME: ${{ secrets.EC2_USERNAME }}
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ${{ secrets.EC2_USERNAME }}
         KEY: ${{ secrets.EC2_KEY }}
-      run: |
-        ssh -i $KEY $USERNAME@$HOST << 'EOF'
+        port: 3000
+        script:
           docker pull ${{ secrets.DOCKER_USERNAME }}/worry-is-bubble:latest
           docker stop worry-is-bubble || true
           docker rm worry-is-bubble || true
           docker run -d --name worry-is-bubble -p 80:3000 ${{ secrets.DOCKER_USERNAME }}/worry-is-bubble:latest
-        EOF
