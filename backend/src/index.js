@@ -13,6 +13,7 @@ const app = express();
 const server = createServer(app);
 
 app.use(cors());
+
 const dbConfig = {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
