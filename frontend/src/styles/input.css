@@ -23,7 +23,7 @@
   flex-shrink: 1;
 }
 
-.message_submit_button {
+#message_submit_button {
   flex-shrink: 0;
   border-radius: 0.5rem;
   border: 1px solid #ccc;
@@ -31,4 +31,5 @@
   height: 100%;
   width: 50px;
   color: #eaffff;
+  cursor: pointer;
 }
