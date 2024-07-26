@@ -34,9 +34,9 @@ jobs:
       with:
         host: ${{ secrets.EC2_HOST }}
         username: ${{ secrets.EC2_USERNAME }}
-        KEY: ${{ secrets.EC2_KEY }}
+        key: ${{ secrets.EC2_KEY }}
         port: 3000
-        script:
+        script: |
           docker pull ${{ secrets.DOCKER_USERNAME }}/worry-is-bubble:latest
           docker stop worry-is-bubble || true
           docker rm worry-is-bubble || true
