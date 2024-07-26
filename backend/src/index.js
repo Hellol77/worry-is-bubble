@@ -23,6 +23,10 @@ const dbConfig = {
 
 let connection;
 
+app.get("/", (req, res) => {
+  res.send("Hello World!", process.env.DB_NAME);
+});
+
 async function connectDB() {
   try {
     connection = await mysql2.createConnection(dbConfig);
