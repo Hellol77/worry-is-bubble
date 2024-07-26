@@ -24,7 +24,8 @@ const dbConfig = {
 let connection;
 
 app.get("/", (req, res) => {
-  res.send("Hello World!", process.env.DB_NAME);
+  console.log(process.env.PORT);
+  res.send("Hello World!");
 });
 
 async function connectDB() {
