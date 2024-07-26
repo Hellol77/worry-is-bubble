@@ -46,12 +46,6 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            echo "DB_HOST=${{ secrets.DB_HOST }}" > /home/ubuntu/worry-is-bubble/.env
-            echo "DB_USER=${{ secrets.DB_USER }}" >> /home/ubuntu/worry-is-bubble/.env
-            echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> /home/ubuntu/worry-is-bubble/.env
-            echo "DB_NAME=${{ secrets.DB_NAME }}" >> /home/ubuntu/worry-is-bubble/.env
-            echo "DB_PORT=${{ secrets.DB_PORT }}" >> /home/ubuntu/worry-is-bubble/.env
-            echo "PORT=${{ secrets.PORT }}" >> /home/ubuntu/worry-is-bubble/.env
             docker pull ${{ secrets.DOCKER_USERNAME }}/worry-is-bubble:latest
             docker stop worry-is-bubble || true
             docker rm worry-is-bubble || true
