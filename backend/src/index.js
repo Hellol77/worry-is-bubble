@@ -12,7 +12,6 @@ const port = process.env.PORT || 3000;
 const app = express();
 const server = createServer(app);
 
-app.use(cors());
 
 const dbConfig = {
   host: process.env.DB_HOST,
@@ -22,11 +21,6 @@ const dbConfig = {
 };
 
 let connection;
-
-app.get("/", (req, res) => {
-  console.log(process.env.PORT);
-  res.send("Hello World!");
-});
 
 async function connectDB() {
   try {
