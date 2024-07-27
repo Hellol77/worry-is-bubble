@@ -39,7 +39,7 @@ async function connectDB() {
 
 const io = new Server(server, {
   cors: {
-    origin: "worry-is-bubble.com",
+    origin: "http://worry-is-bubble.com",
     methods: ["GET", "POST"],
   },
 });
