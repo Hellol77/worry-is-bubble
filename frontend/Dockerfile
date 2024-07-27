@@ -1,24 +1,32 @@
-FROM node:lts-alpine
-# Step 2: Set the working directory
+# Step 1: Use a Node.js base image to build the application
+FROM node:lts-alpine AS build
+
+# Set the working directory
 WORKDIR /app
 
-# Step 3: Copy package.json and package-lock.json
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Step 4: Install dependencies
+# Install dependencies
 RUN npm install
 
-# Step 5: Copy the rest of the application
+# Copy the rest of the application
 COPY . .
 
-# Step 6: Build the application using Webpack
+# Build the application using Webpack
 RUN npm run build
 
-# Step 7: Install http-server to serve the static files
-RUN npm install -g http-server
+# Step 2: Use an Nginx base image to serve the static files
+FROM nginx:alpine
 
-# Step 8: Expose the port
-EXPOSE 8080
+# Copy the build output to the Nginx directory
+COPY --from=build /app/dist /usr/share/nginx/html
 
-# Step 9: Start the http-server
-CMD ["http-server", "dist", "-p", "8080"]
+# Copy custom Nginx configuration file
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Expose port 80 for Nginx
+EXPOSE 80
+
+# Start Nginx
+CMD ["nginx", "-g", "daemon off;"]
