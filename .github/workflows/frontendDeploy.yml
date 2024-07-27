@@ -1,0 +1,44 @@
+name: Deploy frontend to EC2
+
+on:
+  push:
+    paths:
+      - "frontend/**"
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "14"
+
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm install
+
+      - name: Build
+        run: |
+          cd frontend
+          npm run build
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            docker pull ${{ secrets.DOCKER_USERNAME }}/worry-is-bubble-frontend:latest
+            docker stop worry-is-bubble-frontend || true
+            docker rm worry-is-bubble-frontend || true
+            docker run -d --name worry-is-bubble-frontend -p 80:8081 ${{ secrets.DOCKER_USERNAME }}/worry-is-bubble:latest
