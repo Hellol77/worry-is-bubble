@@ -1,4 +1,4 @@
-import Bubble from "../domain/bubble";
+import Bubble from "../components/bubble";
 import bubble1 from "../assets/images/bubble1.png";
 import bubble2 from "../assets/images/bubble2.png";
 import bubble3 from "../assets/images/bubble3.png";
@@ -7,7 +7,7 @@ import io from "socket.io-client";
 
 export default class CanvasController {
   constructor() {
-    this.socket = io(process.env.SOCKET_IP, { path: "/api" });
+    this.socket = io(process.env.SOCKET_IP, { path: "/api/*" });
     this.canvas = document.getElementById("canvas");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
@@ -65,8 +65,7 @@ export default class CanvasController {
     });
   }
 
-  async init() {
-    // await this.generateBubbles();
+  init() {
     this.start();
     this.handleClick();
     this.handleHover();
