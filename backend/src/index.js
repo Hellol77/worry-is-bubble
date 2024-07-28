@@ -3,7 +3,6 @@ import { createServer } from "http";
 import { Server } from "socket.io";
 import mysql2 from "mysql2/promise";
 import dotenv from "dotenv";
-import cors from "cors";
 import { v4 as uuidv4 } from "uuid";
 dotenv.config();
 
@@ -33,7 +32,7 @@ async function connectDB() {
 const io = new Server(server, {
   path: "/api",
   cors: {
-    origin: "https://worry-is-bubble.com",
+    origin: process.env.CORS_ORIGIN,
     methods: ["GET", "POST"],
   },
 });
