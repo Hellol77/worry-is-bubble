@@ -1,12 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Dongle&display=swap");
 @import "./reset.css";
+@import url("https://fonts.googleapis.com/css2?family=Dongle&display=swap");
 @import "./input.css";
 @import "./canvas.css";
+@import "./menu.css";
 
 body {
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: end;
 }

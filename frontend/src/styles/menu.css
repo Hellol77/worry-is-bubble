@@ -1,0 +1,39 @@
+#menu_container {
+  display: absolute;
+  top: 0;
+  left: 0;
+  svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    margin-left: 20px;
+    margin-top: 20px;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}
+
+.show_menu {
+  transform: translateX(300px);
+}
+
+.change_menu_svg_color {
+  stroke: #fff;
+}
+
+#menu_svg_path {
+  transition: all 0.3s;
+}
+
+#menu_content {
+  width: 300px;
+  position: absolute;
+  top: 0;
+  left: -300px;
+  height: 100vh;
+  z-index: 2;
+  background-color: #333;
+  transition: all 0.3s;
+}
