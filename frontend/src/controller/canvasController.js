@@ -7,7 +7,7 @@ import io from "socket.io-client";
 
 export default class CanvasController {
   constructor() {
-    this.socket = io(process.env.SOCKET_IP);
+    this.socket = io(process.env.SOCKET_IP, { path: "/api" });
     this.canvas = document.getElementById("canvas");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;

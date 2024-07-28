@@ -1,9 +1,10 @@
 import io from "socket.io-client";
+
 export default class InputController {
   constructor() {
     this.input = document.getElementById("message_input");
     this.button = document.getElementById("message_submit_button");
-    this.socket = io(process.env.SOCKET_IP);
+    this.socket = io(process.env.SOCKET_IP, { path: "/api" });
   }
 
   init() {

@@ -12,7 +12,6 @@ const port = process.env.PORT || 3000;
 const app = express();
 const server = createServer(app);
 
-
 const dbConfig = {
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -32,6 +31,7 @@ async function connectDB() {
 }
 
 const io = new Server(server, {
+  path: "/api",
   cors: {
     origin: "https://worry-is-bubble.com",
     methods: ["GET", "POST"],
