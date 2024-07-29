@@ -3,7 +3,7 @@ const timeAgo = (date) => {
   const secondsPast = (now.getTime() - date.getTime()) / 1000;
 
   if (secondsPast < 60) {
-    return `${Math.floor(secondsPast)}초 전`;
+    return `${Math.floor(secondsPast) < 0 ? 0 : Math.floor(secondsPast)}초 전`;
   }
   if (secondsPast < 3600) {
     return `${Math.floor(secondsPast / 60)}분 전`;
