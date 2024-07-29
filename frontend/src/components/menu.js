@@ -8,6 +8,10 @@ export default class Menu {
     const menuContent = document.createElement("div");
     menuContent.id = "menu_content";
 
+    const menuOl = document.createElement("ol");
+    menuOl.id = "menu_ol";
+
+    menuContent.appendChild(menuOl);
     menuContainer.appendChild(this.svg());
     menuContainer.appendChild(menuContent);
 

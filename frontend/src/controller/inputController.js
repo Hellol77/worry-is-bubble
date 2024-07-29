@@ -14,6 +14,7 @@ export default class InputController {
 
   inputEnterKeyDown() {
     this.input.addEventListener("keydown", ({ key, isComposing }) => {
+      if (this.input.value === "") return;
       if (key === "Enter" && !isComposing) {
         const message = this.input.value;
         this.input.value = "";
@@ -24,6 +25,7 @@ export default class InputController {
 
   buttonSubmit() {
     this.button.addEventListener("click", () => {
+      if (this.input.value === "") return;
       const message = this.input.value;
       this.input.value = "";
       this.socket.emit("addBubble", message);
