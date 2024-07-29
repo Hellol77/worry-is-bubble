@@ -40,7 +40,9 @@ const io = new Server(server, {
 io.on("connection", async (socket) => {
   console.log("User connected");
 
-  const [rows] = await connection.execute("SELECT * FROM messages");
+  const [rows] = await connection.execute(
+    "SELECT * FROM messages ORDER BY created_at ASC"
+  );
 
   socket.emit("getBubbles", rows);
 
