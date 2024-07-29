@@ -4,7 +4,7 @@ import bubble2 from "../assets/images/bubble2.png";
 import bubble3 from "../assets/images/bubble3.png";
 import bubble4 from "../assets/images/bubble4.png";
 import io from "socket.io-client";
-
+import bubblePop from "../assets/audio/bubblePop.mp3";
 export default class CanvasController {
   constructor() {
     this.socket = io(process.env.SOCKET_IP, { path: "/api/*" });
@@ -12,6 +12,7 @@ export default class CanvasController {
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.ctx = this.canvas.getContext("2d");
+    this.bubblePopAudio = new Audio(bubblePop);
 
     window.addEventListener("resize", () => {
       this.canvas.width = window.innerWidth;
@@ -59,6 +60,7 @@ export default class CanvasController {
       for (let i = 0; i < this.bubbles.length; i++) {
         if (this.bubbles[i].id === id) {
           this.bubbles.splice(i, 1);
+          this.bubblePopAudio.play();
           break;
         }
       }
@@ -116,6 +118,7 @@ export default class CanvasController {
       for (let i = this.bubbles.length - 1; i >= 0; i--) {
         if (this.bubbles[i].isClicked(mouseX, mouseY)) {
           this.socket.emit("deleteBubble", this.bubbles[i].id);
+          this.bubblePopAudio.play();
           this.bubbles.splice(i, 1);
           break;
         }
