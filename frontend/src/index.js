@@ -1,7 +1,7 @@
 import CanvasController from "./controller/canvasController";
 import InputController from "./controller/inputController";
 import Input from "./components/input";
-import Menu from "./components/menu";
+import Menu from "./components/menu/menu";
 import MenuController from "./controller/menuController";
 
 class App {

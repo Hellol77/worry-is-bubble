@@ -40,11 +40,15 @@
 }
 #menu_ol {
   list-style: none;
-  padding: 24px;
+  padding-left: 24px;
   margin-top: 100px;
-  height: 60%;
+  height: 70%;
   background-color: #333;
   overflow-y: scroll;
+}
+
+.menu_li {
+  margin-bottom: 8px;
 }
 
 .menu_bubble {
@@ -78,4 +82,13 @@ footer {
   align-items: center;
   font-size: 1rem;
   font-family: "Dongle", sans-serif;
+}
+
+.text_small {
+  font-size: 1.8rem;
+}
+
+.text_createAt {
+  font-size: 1.2rem;
+  color: #ccc;
 }

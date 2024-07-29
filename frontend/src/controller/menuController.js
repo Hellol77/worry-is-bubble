@@ -18,25 +18,35 @@ export default class MenuController {
 
     this.socket.on("getBubbles", (bubbles) => {
       bubbles.map((bubble) => {
-        const div = document.createElement("li");
+        const li = document.createElement("li");
+        li.classList.add("menu_li");
         const span = document.createElement("span");
         const p = document.createElement("p");
         span.textContent = timeAgo(new Date(bubble.created_at));
+        span.classList.add("text_createAt");
         p.textContent = bubble.text;
-        div.classList.add("menu_bubble");
-        div.id = bubble.id;
-        div.appendChild(p);
-        div.appendChild(span);
-        this.menuOl.appendChild(div);
+        p.classList.add("text_small");
+        li.classList.add("menu_bubble");
+        li.id = bubble.id;
+        li.appendChild(p);
+        li.appendChild(span);
+        this.menuOl.appendChild(li);
       });
     });
 
     this.socket.on("add", (data) => {
-      const div = document.createElement("div");
-      div.textContent = data.text;
-      div.id = data.id;
-      div.classList.add("menu_bubble");
-      this.menuOl.appendChild(div);
+      const li = document.createElement("li");
+      li.id = data.id;
+      li.classList.add("menu_bubble");
+      const p = document.createElement("p");
+      p.classList.add("text_small");
+      p.textContent = data.text;
+      const span = document.createElement("span");
+      span.textContent = timeAgo(new Date(data.created_at));
+      span.classList.add("text_createAt");
+      li.appendChild(p);
+      li.appendChild(span);
+      this.menuOl.appendChild(li);
     });
 
     this.socket.on("delete", (id) => {
