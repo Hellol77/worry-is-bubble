@@ -49,13 +49,15 @@ io.on("connection", async (socket) => {
   socket.on("addBubble", async (data) => {
     console.log("Received input server: ", data);
     const id = uuidv4();
-    await connection.query("INSERT INTO messages (id,text) VALUES (?,?)", [
-      id,
-      data,
-    ]);
+    const createdAt = new Date();
+    await connection.query(
+      "INSERT INTO messages (id,text,created_at) VALUES (?,?,?)",
+      [id, data, createdAt]
+    );
     io.emit("add", {
       id: id,
       text: data,
+      created_at: createdAt,
     });
   });
 

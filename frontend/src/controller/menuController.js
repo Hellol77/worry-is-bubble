@@ -1,5 +1,6 @@
 import { $ } from "../utils/querySelector";
 import io from "socket.io-client";
+import timeAgo from "../utils/timeAgo";
 
 export default class MenuController {
   constructor() {
@@ -18,9 +19,14 @@ export default class MenuController {
     this.socket.on("getBubbles", (bubbles) => {
       bubbles.map((bubble) => {
         const div = document.createElement("li");
-        div.textContent = bubble.text;
+        const span = document.createElement("span");
+        const p = document.createElement("p");
+        span.textContent = timeAgo(new Date(bubble.created_at));
+        p.textContent = bubble.text;
         div.classList.add("menu_bubble");
         div.id = bubble.id;
+        div.appendChild(p);
+        div.appendChild(span);
         this.menuOl.appendChild(div);
       });
     });
@@ -50,8 +56,8 @@ export default class MenuController {
     menuImg.addEventListener("click", () => {
       this.menuContent.classList.toggle("show_menu");
 
-      const menuImg = $("#menu_svg_path");
-      menuImg.classList.toggle("change_menu_svg_color");
+      const menuImgPath = $("#menu_svg_path");
+      menuImgPath.classList.toggle("change_menu_svg_color");
     });
 
     document.addEventListener("click", (event) => {
