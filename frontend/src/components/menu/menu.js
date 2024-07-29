@@ -26,6 +26,7 @@ export default class Menu {
     profileFooter.appendChild(instagramLink);
 
     const profileText = document.createElement("p");
+    profileText.classList.add("profile_text");
     profileText.textContent = "Made by Hellol";
     profileFooter.appendChild(profileText);
 
