@@ -1,6 +1,6 @@
 import { $ } from "../utils/querySelector";
 import io from "socket.io-client";
-import timeAgo from "../utils/timeAgo";
+import MenuText from "../components/menu/menuText";
 
 export default class MenuController {
   constructor() {
@@ -18,34 +18,21 @@ export default class MenuController {
 
     this.socket.on("getBubbles", (bubbles) => {
       bubbles.map((bubble) => {
-        const li = document.createElement("li");
-        li.classList.add("menu_li");
-        const span = document.createElement("span");
-        const p = document.createElement("p");
-        span.textContent = timeAgo(new Date(bubble.created_at));
-        span.classList.add("text_createAt");
-        p.textContent = bubble.text;
-        p.classList.add("text_small");
-        li.classList.add("menu_bubble");
-        li.id = bubble.id;
-        li.appendChild(p);
-        li.appendChild(span);
+        const li = new MenuText(
+          bubble.id,
+          bubble.text,
+          bubble.created_at
+        ).render();
         this.menuOl.appendChild(li);
       });
     });
 
-    this.socket.on("add", (data) => {
-      const li = document.createElement("li");
-      li.id = data.id;
-      li.classList.add("menu_bubble");
-      const p = document.createElement("p");
-      p.classList.add("text_small");
-      p.textContent = data.text;
-      const span = document.createElement("span");
-      span.textContent = timeAgo(new Date(data.created_at));
-      span.classList.add("text_createAt");
-      li.appendChild(p);
-      li.appendChild(span);
+    this.socket.on("add", (bubble) => {
+      const li = new MenuText(
+        bubble.id,
+        bubble.text,
+        bubble.created_at
+      ).render();
       this.menuOl.appendChild(li);
     });
 
