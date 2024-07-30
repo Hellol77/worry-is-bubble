@@ -5,10 +5,12 @@ import bubble3 from "../assets/images/bubble3.png";
 import bubble4 from "../assets/images/bubble4.png";
 import io from "socket.io-client";
 import bubblePop from "../assets/audio/bubblePop.mp3";
+import { $ } from "../utils/querySelector";
+
 export default class CanvasController {
   constructor() {
     this.socket = io(process.env.SOCKET_IP, { path: "/api/*" });
-    this.canvas = document.getElementById("canvas");
+    this.canvas = $("#canvas");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;
     this.ctx = this.canvas.getContext("2d");
