@@ -4,7 +4,7 @@ import MenuText from "../components/menu/menuText";
 
 export default class MenuController {
   constructor() {
-    this.socket = io(process.env.SOCKET_IP, { path: "/api/*" });
+    this.socket = io(process.env.SOCKET_IP, { path: "/api" });
     this.menuContent = $("#menu_content");
     this.menuOl = $("#menu_ol");
     this.socketInit();

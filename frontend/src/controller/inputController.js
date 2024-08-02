@@ -5,7 +5,7 @@ export default class InputController {
   constructor() {
     this.input = $("#message_input");
     this.button = $("#message_submit_button");
-    this.socket = io(process.env.SOCKET_IP, { path: "/api/*" });
+    this.socket = io(process.env.SOCKET_IP, { path: "/api" });
   }
 
   init() {

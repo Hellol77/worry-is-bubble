@@ -9,7 +9,7 @@ import { $ } from "../utils/querySelector";
 
 export default class CanvasController {
   constructor() {
-    this.socket = io(process.env.SOCKET_IP, { path: "/api/*" });
+    this.socket = io(process.env.SOCKET_IP, { path: "/api" });
     this.canvas = $("#canvas");
     this.canvas.width = window.innerWidth;
     this.canvas.height = window.innerHeight;

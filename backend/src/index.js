@@ -68,6 +68,10 @@ io.on("connection", async (socket) => {
   });
 });
 
+app.get("/", (req, res) => {
+  res.send("Hello World!");
+});
+
 server.listen(port, async () => {
   await connectDB();
   console.log(`Server is running on http://localhost:${port}`);
