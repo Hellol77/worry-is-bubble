@@ -1,17 +1,26 @@
-FROM node:lts-alpine
-WORKDIR /usr/app
+# 1. Build the Node.js application
+FROM node:16-alpine as build
 
-# Copy the package.json and package-lock.json files
+WORKDIR /usr/src/app
+
 COPY package*.json ./
-
-# Install any needed packages
 RUN npm install
 
-# Copy the rest of the application code
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 3000
+RUN npm run build
 
-# Run the app
-CMD [ "node", "src/index.js" ]
+# 2. Production stage with Nginx
+FROM nginx:alpine
+
+# 3. Nginx 설정 파일 복사
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# 4. 빌드된 애플리케이션 복사
+COPY --from=build /usr/src/app/build /usr/share/nginx/html
+
+# 5. Nginx 포트 노출
+EXPOSE 80
+
+# 6. Nginx 실행
+CMD ["nginx", "-g", "daemon off;"]
