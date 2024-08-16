@@ -1,5 +1,5 @@
 export default class Bubble {
-  constructor(id, x, y, speed, dx, dy, imageSrc, text) {
+  constructor(id, x, y, speed, dx, dy, imageSrc, text, strength) {
     this.id = id;
     this.x = x;
     this.y = y;
@@ -8,6 +8,7 @@ export default class Bubble {
     this.speed = speed;
     this.text = text;
     this.hovered = false;
+    this.strength = strength;
     const tempCanvas = document.createElement("canvas");
     const tempCtx = tempCanvas.getContext("2d");
     // tempCtx.font = "bold 20px Arial"; // 기본 폰트 설정
