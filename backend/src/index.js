@@ -50,9 +50,10 @@ io.on("connection", async (socket) => {
     console.log("Received input server: ", data);
     const id = uuidv4();
     const createdAt = new Date();
+    const deleteAt = new Date(Date.now() + 10 * 60 * 1000);
     await connection.query(
-      "INSERT INTO messages (id,text,created_at) VALUES (?,?,?)",
-      [id, data, createdAt]
+      "INSERT INTO messages (id,text,created_at,delete_at) VALUES (?,?,?,?)",
+      [id, data, createdAt, deleteAt]
     );
     io.emit("add", {
       id: id,
