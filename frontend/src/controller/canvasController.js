@@ -92,7 +92,8 @@ export default class CanvasController {
       dx,
       dy,
       this.images[imageIndex],
-      bubble.text
+      bubble.text,
+      bubble.strength
     );
 
     this.bubbles.push(newBubble);
