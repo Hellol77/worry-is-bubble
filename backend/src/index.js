@@ -59,6 +59,8 @@ io.on("connection", async (socket) => {
       id: id,
       text: data,
       created_at: createdAt,
+      strength: 3,
+      delete_at: deleteAt,
     });
   });
 
