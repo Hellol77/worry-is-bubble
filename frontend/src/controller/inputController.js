@@ -15,6 +15,15 @@ export default class InputController {
     this.buttonSubmit();
   }
 
+  disableInput() {
+    this.input.disabled = true; // input 비활성화
+    this.button.disabled = true; // button 비활성화
+    setTimeout(() => {
+      this.input.disabled = false; // 0.5초 후 input 활성화
+      this.button.disabled = false; // 0.5초 후 button 활성화
+    }, 1000);
+  }
+
   inputEnterKeyDown() {
     this.input.addEventListener("keydown", ({ key, isComposing }) => {
       if (key === "Enter" && !isComposing) {
@@ -26,6 +35,7 @@ export default class InputController {
         }
         this.input.value = "";
         this.socket.emit("addBubble", message);
+        this.disableInput();
       }
     });
   }
@@ -40,6 +50,7 @@ export default class InputController {
       }
       this.input.value = "";
       this.socket.emit("addBubble", message);
+      this.disableInput();
     });
   }
 }
