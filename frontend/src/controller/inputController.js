@@ -19,7 +19,6 @@ export default class InputController {
     this.input.addEventListener("keydown", ({ key, isComposing }) => {
       if (key === "Enter" && !isComposing) {
         const message = this.input.value.trim();
-        if (message === "") return;
         if (message.length < 6) {
           this.toast.render("메시지는 6자 이상으로 입력해주세요.");
           console.log("메시지는 6자 이상으로 입력해주세요.");
@@ -34,7 +33,6 @@ export default class InputController {
   buttonSubmit() {
     this.button.addEventListener("click", () => {
       const message = this.input.value.trim();
-      if (message === "") return;
       if (message.length < 6) {
         this.toast.render("메시지는 6자 이상으로 입력해주세요.");
         console.log("메시지는 6자 이상으로 입력해주세요.");
