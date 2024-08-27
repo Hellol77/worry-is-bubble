@@ -4,6 +4,18 @@ import Input from "./components/input";
 import Menu from "./components/menu/menu";
 import MenuController from "./controller/menuController";
 
+window.onload = function () {
+  navigator.mediaDevices
+    .getUserMedia({ audio: true })
+    .then(() => {
+      AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioContext = new AudioContext();
+    })
+    .catch((e) => {
+      console.error(`Audio permissions denied: ${e}`);
+    });
+};
+
 class App {
   constructor() {
     this.body = document.querySelector("body");
