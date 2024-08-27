@@ -47,19 +47,24 @@ io.on("connection", async (socket) => {
   socket.emit("getBubbles", rows);
 
   socket.on("addBubble", async (data) => {
-    console.log("Received input server: ", data);
+    const text = data.trim();
+    console.log("Received input server: ", text);
+    if (text.length < 6) {
+      console.log("메시지는 6자 이상으로 입력해주세요.");
+      return;
+    }
     const id = uuidv4();
     const createdAt = new Date();
     const deleteAt = new Date(Date.now() + 12 * 60 * 60 * 1000);
     await connection.query("INSERT INTO messages (id,text,created_at,delete_at) VALUES (?,?,?,?)", [
       id,
-      data,
+      text,
       createdAt,
       deleteAt,
     ]);
     io.emit("add", {
       id: id,
-      text: data,
+      text,
       created_at: createdAt,
       delete_at: deleteAt,
     });

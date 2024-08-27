@@ -1,11 +1,13 @@
 import io from "socket.io-client";
 import { $ } from "../utils/querySelector";
+import Toast from "../components/toast";
 
 export default class InputController {
   constructor() {
     this.input = $("#message_input");
     this.button = $("#message_submit_button");
     this.socket = io(process.env.SOCKET_IP, { path: "/api" });
+    this.toast = new Toast();
   }
 
   init() {
@@ -15,9 +17,14 @@ export default class InputController {
 
   inputEnterKeyDown() {
     this.input.addEventListener("keydown", ({ key, isComposing }) => {
-      if (this.input.value === "") return;
       if (key === "Enter" && !isComposing) {
-        const message = this.input.value;
+        const message = this.input.value.trim();
+        if (message === "") return;
+        if (message.length < 6) {
+          this.toast.render("메시지는 6자 이상으로 입력해주세요.");
+          console.log("메시지는 6자 이상으로 입력해주세요.");
+          return;
+        }
         this.input.value = "";
         this.socket.emit("addBubble", message);
       }
@@ -26,8 +33,13 @@ export default class InputController {
 
   buttonSubmit() {
     this.button.addEventListener("click", () => {
-      if (this.input.value === "") return;
-      const message = this.input.value;
+      const message = this.input.value.trim();
+      if (message === "") return;
+      if (message.length < 6) {
+        this.toast.render("메시지는 6자 이상으로 입력해주세요.");
+        console.log("메시지는 6자 이상으로 입력해주세요.");
+        return;
+      }
       this.input.value = "";
       this.socket.emit("addBubble", message);
     });

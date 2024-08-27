@@ -11,11 +11,9 @@ export default class Bubble {
     this.strength = 3;
     const tempCanvas = document.createElement("canvas");
     const tempCtx = tempCanvas.getContext("2d");
-    // tempCtx.font = "bold 20px Arial"; // 기본 폰트 설정
     const textWidth = tempCtx.measureText(text).width;
     const textHeight = 20;
     this.radius = Math.max(textWidth, textHeight); // 여백을 포함하여 계산
-
     this.image = new Image();
     this.image.src = imageSrc;
     this.image.onload = () => {
