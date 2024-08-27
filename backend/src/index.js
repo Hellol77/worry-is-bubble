@@ -50,7 +50,7 @@ io.on("connection", async (socket) => {
     console.log("Received input server: ", data);
     const id = uuidv4();
     const createdAt = new Date();
-    const deleteAt = new Date(Date.now() + 10 * 60 * 1000);
+    const deleteAt = new Date(Date.now() + 12 * 60 * 60 * 1000);
     await connection.query("INSERT INTO messages (id,text,created_at,delete_at) VALUES (?,?,?,?)", [
       id,
       data,
@@ -74,6 +74,32 @@ io.on("connection", async (socket) => {
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
+});
+
+cron.schedule("*/60 * * * *", async () => {
+  console.log("60분 마다 만료된 메시지를 삭제합니다.");
+  try {
+    const now = new Date();
+    // 삭제할 메시지의 id들을 가져옴
+    const [rows] = await connection.query("SELECT id FROM messages WHERE delete_at <= ?", [now]);
+
+    // 삭제할 메시지가 있는 경우
+    if (rows.length > 0) {
+      const idsToDelete = rows.map((row) => row.id);
+      await connection.query("DELETE FROM messages WHERE id IN (?)", [idsToDelete]);
+
+      // 삭제된 메시지들의 id를 클라이언트들에게 알림
+      idsToDelete.forEach((id) => {
+        io.emit("delete", id);
+      });
+
+      console.log(`${idsToDelete.length}개의 메시지가 삭제되었습니다.`);
+    } else {
+      console.log("삭제할 메시지가 없습니다.");
+    }
+  } catch (err) {
+    console.error("메시지 삭제 중 오류 발생:", err);
+  }
 });
 
 server.listen(port, async () => {
