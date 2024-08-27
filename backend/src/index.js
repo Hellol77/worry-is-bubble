@@ -4,6 +4,8 @@ import { Server } from "socket.io";
 import mysql2 from "mysql2/promise";
 import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
+import cron from "node-cron";
+
 dotenv.config();
 
 const port = process.env.PORT || 3000;
@@ -40,9 +42,7 @@ const io = new Server(server, {
 io.on("connection", async (socket) => {
   console.log("User connected");
 
-  const [rows] = await connection.execute(
-    "SELECT * FROM messages ORDER BY created_at ASC"
-  );
+  const [rows] = await connection.execute("SELECT * FROM messages ORDER BY created_at ASC");
 
   socket.emit("getBubbles", rows);
 
@@ -51,15 +51,16 @@ io.on("connection", async (socket) => {
     const id = uuidv4();
     const createdAt = new Date();
     const deleteAt = new Date(Date.now() + 10 * 60 * 1000);
-    await connection.query(
-      "INSERT INTO messages (id,text,created_at,delete_at) VALUES (?,?,?,?)",
-      [id, data, createdAt, deleteAt]
-    );
+    await connection.query("INSERT INTO messages (id,text,created_at,delete_at) VALUES (?,?,?,?)", [
+      id,
+      data,
+      createdAt,
+      deleteAt,
+    ]);
     io.emit("add", {
       id: id,
       text: data,
       created_at: createdAt,
-      strength: 3,
       delete_at: deleteAt,
     });
   });
