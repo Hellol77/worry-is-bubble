@@ -1,5 +1,5 @@
 export default class Bubble {
-  constructor(id, x, y, speed, dx, dy, imageSrc, text, strength) {
+  constructor(id, x, y, speed, dx, dy, imageSrc, text) {
     this.id = id;
     this.x = x;
     this.y = y;
@@ -8,7 +8,7 @@ export default class Bubble {
     this.speed = speed;
     this.text = text;
     this.hovered = false;
-    this.strength = strength;
+    this.strength = 3;
     const tempCanvas = document.createElement("canvas");
     const tempCtx = tempCanvas.getContext("2d");
     // tempCtx.font = "bold 20px Arial"; // 기본 폰트 설정
@@ -69,5 +69,9 @@ export default class Bubble {
     const dist = Math.sqrt((this.x - mouseX) ** 2 + (this.y - mouseY) ** 2);
     this.hovered = dist < this.radius;
     return dist < this.radius;
+  }
+
+  downStrength() {
+    this.strength -= 1;
   }
 }

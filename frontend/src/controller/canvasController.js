@@ -121,9 +121,12 @@ export default class CanvasController {
 
       for (let i = this.bubbles.length - 1; i >= 0; i--) {
         if (this.bubbles[i].isClicked(mouseX, mouseY)) {
-          this.socket.emit("deleteBubble", this.bubbles[i].id);
-          this.bubblePopAudio.play();
-          this.bubbles.splice(i, 1);
+          this.bubbles[i].downStrength();
+          if (this.bubbles[i].strength === 0) {
+            this.socket.emit("deleteBubble", this.bubbles[i].id);
+            this.bubblePopAudio.play();
+            this.bubbles.splice(i, 1);
+          }
           break;
         }
       }
