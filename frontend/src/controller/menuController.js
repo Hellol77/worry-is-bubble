@@ -18,21 +18,13 @@ export default class MenuController {
 
     this.socket.on("getBubbles", (bubbles) => {
       bubbles.map((bubble) => {
-        const li = new MenuText(
-          bubble.id,
-          bubble.text,
-          bubble.created_at
-        ).render();
+        const li = new MenuText(bubble.id, bubble.text, bubble.created_at).render();
         this.menuOl.appendChild(li);
       });
     });
 
     this.socket.on("add", (bubble) => {
-      const li = new MenuText(
-        bubble.id,
-        bubble.text,
-        bubble.created_at
-      ).render();
+      const li = new MenuText(bubble.id, bubble.text, bubble.created_at).render();
       this.menuOl.appendChild(li);
     });
 
@@ -59,10 +51,7 @@ export default class MenuController {
 
     document.addEventListener("click", (event) => {
       // 클릭한 요소가 menuContent 또는 menuImg가 아니면 메뉴 닫기
-      if (
-        !this.menuContent.contains(event.target) &&
-        !menuImg.contains(event.target)
-      ) {
+      if (!this.menuContent.contains(event.target) && !menuImg.contains(event.target)) {
         this.menuContent.classList.remove("show_menu");
         const menuImgPath = $("#menu_svg_path");
         menuImgPath.classList.remove("change_menu_svg_color");
