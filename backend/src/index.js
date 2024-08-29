@@ -49,8 +49,8 @@ io.on("connection", async (socket) => {
   socket.on("addBubble", async (data) => {
     const text = data.trim();
     console.log("Received input server: ", text);
-    if (text.length < 6) {
-      console.log("메시지는 6자 이상으로 입력해주세요.");
+    if (text.length < 4) {
+      console.log("메시지는 4자 이상으로 입력해주세요.");
       return;
     }
     const id = uuidv4();

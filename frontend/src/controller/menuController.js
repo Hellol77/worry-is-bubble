@@ -24,7 +24,7 @@ export default class MenuController {
     });
 
     this.socket.on("add", (bubble) => {
-      const li = new MenuText(bubble.id, bubble.text, bubble.created_at).render();
+      const li = new MenuText(bubble.id, bubble.text).render();
       this.menuOl.appendChild(li);
     });
 
