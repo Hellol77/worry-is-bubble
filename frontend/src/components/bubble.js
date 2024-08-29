@@ -8,7 +8,7 @@ export default class Bubble {
     this.speed = speed;
     this.text = text;
     this.hovered = false;
-    this.strength = 3;
+    this.strength = 5;
     const tempCanvas = document.createElement("canvas");
     const tempCtx = tempCanvas.getContext("2d");
     const textWidth = tempCtx.measureText(text).width;
