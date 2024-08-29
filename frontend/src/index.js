@@ -3,6 +3,7 @@ import InputController from "./controller/inputController";
 import Input from "./components/input";
 import Menu from "./components/menu/menu";
 import MenuController from "./controller/menuController";
+import Title from "./components/title";
 
 window.onload = function () {
   navigator?.mediaDevices
@@ -35,6 +36,8 @@ class App {
   render() {
     const input = new Input();
     const menu = new Menu();
+    const title = new Title("Worry is Bubble");
+    this.body.appendChild(title.render());
     this.body.appendChild(menu.render());
     this.body.appendChild(input.render());
   }

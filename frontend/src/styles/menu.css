@@ -25,6 +25,7 @@
 
 #menu_svg_path {
   transition: all 0.3s;
+  stroke: #fff;
 }
 
 #menu_content {

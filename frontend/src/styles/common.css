@@ -4,10 +4,23 @@
 @import "./canvas.css";
 @import "./menu.css";
 @import "./toast.css";
+@import "./title.css";
+
+:root {
+  --bg-color-inner: rgba(0, 0, 0, 0.95);
+  --bg-color-outer: rgba(0, 0, 0, 0.7);
+  --text-color: #f5f5f5;
+  --glow-color: #541585;
+}
 
 body {
   width: 100vw;
   height: 100vh;
+  background-image: radial-gradient(circle, var(--bg-color-inner), var(--bg-color-outer)),
+    url("../assets/images/wall.webp");
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 ::-webkit-scrollbar {

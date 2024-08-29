@@ -44,17 +44,12 @@ export default class MenuController {
 
     menuImg.addEventListener("click", () => {
       this.menuContent.classList.toggle("show_menu");
-
-      const menuImgPath = $("#menu_svg_path");
-      menuImgPath.classList.toggle("change_menu_svg_color");
     });
 
     document.addEventListener("click", (event) => {
       // 클릭한 요소가 menuContent 또는 menuImg가 아니면 메뉴 닫기
       if (!this.menuContent.contains(event.target) && !menuImg.contains(event.target)) {
         this.menuContent.classList.remove("show_menu");
-        const menuImgPath = $("#menu_svg_path");
-        menuImgPath.classList.remove("change_menu_svg_color");
       }
     });
   }
