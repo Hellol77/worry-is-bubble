@@ -36,7 +36,7 @@ class App {
   render() {
     const input = new Input();
     const menu = new Menu();
-    const title = new Title("Worry is Bubble");
+    const title = new Title("Everything is Bubble");
     this.body.appendChild(title.render());
     this.body.appendChild(menu.render());
     this.body.appendChild(input.render());
