@@ -12,6 +12,10 @@
     0 0 160px var(--glow-color),
     0 0 200px var(--glow-color);
   animation: flicker-2 2s linear infinite both;
+  -webkit-user-select: none; /* Chrome, Safari, Edge */
+  -moz-user-select: none; /* Firefox */
+  -ms-user-select: none; /* Internet Explorer/Edge */
+  user-select: none;
 }
 
 @media (max-width: 768px) {
