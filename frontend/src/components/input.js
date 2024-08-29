@@ -5,7 +5,7 @@ export default class Input {
     const input = document.createElement("input");
     input.id = "message_input";
     input.type = "text";
-    input.placeholder = "고민을 입력해주세요!";
+    input.placeholder = "4자 이상 입력해주세요!";
 
     const button = document.createElement("button");
     button.id = "message_submit_button";
