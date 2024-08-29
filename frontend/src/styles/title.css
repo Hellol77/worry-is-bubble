@@ -1,7 +1,7 @@
 #title {
   font-family: "Dongle", sans-serif;
-  font-size: 8rem;
   color: var(--text-color);
+  font-size: 5rem;
   text-shadow:
     0 0 7px var(--text-color),
     0 0 13px var(--text-color),
@@ -14,15 +14,9 @@
   animation: flicker-2 2s linear infinite both;
 }
 
-@media (max-width: 480px) {
-  h1 {
-    font-size: 3rem;
-  }
-}
-
 @media (max-width: 768px) {
-  h1 {
-    font-size: 6rem;
+  #title {
+    font-size: 3rem;
   }
 }
 
